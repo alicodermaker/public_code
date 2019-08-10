@@ -22,8 +22,6 @@ metro_ride_1 = 8
 metro_ride_2 = 22
 walk_metro_to_home = 20
 
-
-
 def log_file(message):
 	file_name = '{}/lastmetroreminder_{}.txt'.format(os.path.dirname(sys.argv[0]),'{:02d}'.format(datetime.date.today().month))
 	with open(file_name,"a+") as f:
