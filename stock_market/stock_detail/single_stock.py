@@ -2,7 +2,7 @@ from bsedata.bse import BSE
 
 b = BSE()
 q = b.getQuote(str(532454))
-# print(q)
+
 print("company Name 		 : {}".format(q['companyName']))
 print("--------------------------------------------")
 print("current Value 		 : {}".format(q['currentValue']))
