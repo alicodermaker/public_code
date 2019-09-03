@@ -24,7 +24,7 @@ if __name__ == '__main__':
 	message_body = """
 
 		* * *
-		This bot can be used by any script... check [Github](http://someurl)
+		This bot can be used by any script... check [Github](https://github.com/alicodermaker/public_code/blob/master/send_telegram_notification.py)
 	"""
 
 	send_message("by ali khundmiri's bot...", message_body, "Ali's Telegram Bot")
