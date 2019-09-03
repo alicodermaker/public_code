@@ -5,6 +5,7 @@ import webbrowser
 from datetime import timedelta
 import time
 
+from credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
 
 office_ips = [
 	'223.230.66.40',
@@ -23,7 +24,8 @@ metro_ride_2 = 22
 walk_metro_to_home = 20
 
 def log_file(message):
-	file_name = '{}/lastmetroreminder_{}.txt'.format(os.path.dirname(sys.argv[0]),'{:02d}'.format(datetime.date.today().month))
+	file_name = '{}/logs/lastmetroreminder_{}.txt'.format(os.path.abspath(os.path.join(os.path.join(os.path.realpath(__file__), '..'),'..')),'{:02d}'.format(datetime.date.today().month))
+	# file_name = '{}/logs/lastmetroreminder_{}.txt'.format(os.path.dirname(sys.argv[0]),'{:02d}'.format(datetime.date.today().month))
 	with open(file_name,"a+") as f:
 		f.write(message)
 
@@ -56,15 +58,20 @@ def get_ip():
 		pass
 
 def notify(title, text, subtitle, Audio):
-    if subtitle:
-        os.system("""
-        osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'
-        """.format(title, subtitle, text, Audio))
-    else:
-        os.system("""
-        osascript -e 'display notification "{}" with title "{}" sound name "{}"'
-        """.format(title, text, Audio))
+	send_message(title, text, subtitle)
+	os.system("""osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'""".format(title, subtitle, text, Audio))
+
+
+def send_message(title, text, subtitle):
+	''' Send message to on telegram '''
+	text_message = '''
+		*{}*
+		{}
+		_{}_
+	'''.format(subtitle, text, title)
+	url  = 'https://api.telegram.org/bot{}/sendMessage'.format(TELEGRAM_TOKEN_METROREMINDER)
+	payload = {'text': text_message, 'chat_id':PERSONAL_ID_TELEGRAM, 'parse_mode':'Markdown'}
+	r = requests.post(url, data=payload)
 
 if __name__ == '__main__':
-	time.sleep(5)
 	get_ip()
