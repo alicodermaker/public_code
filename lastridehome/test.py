@@ -1,4 +1,12 @@
-from create_logs import log_error, log_status
+
+'''
+This two line of code, add parent directory to PYTHONPATH. 
+Important for relative import of create_log file
+'''
+import sys
+sys.path.insert(0,'..')
+
+from public_code.create_log import log_error, log_status
 
 def main():
 	log_error("logging the first error", 'lastmetro')

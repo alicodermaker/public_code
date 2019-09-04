@@ -5,8 +5,16 @@ import webbrowser
 from datetime import timedelta
 import time
 
-from credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
-# from public_code.send_telegram_notification import send_message as s_m
+'''
+adding the parent directory to PYTHONPATH
+'''
+sys.path.insert(0,'..')
+
+from public_code.credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
+from public_code.send_telegram_notification import send_message
+from public_code.create_log import log_error, log_status
+
+
 
 office_ips = [
 	'223.230.66.40',
@@ -24,6 +32,14 @@ metro_ride_1 = 8
 metro_ride_2 = 22
 walk_metro_to_home = 20
 
+def main():
+	''' Check IP, and take the next step accordingly '''
+	current_ip = get_ip()
+	if current_ip in office_ips:
+		alert_user(current_ip)
+	else:
+		pass
+
 def log_file(message):
 	file_name = '{}/logs/lastmetroreminder_{}.txt'.format(os.path.abspath(os.path.join(os.path.join(os.path.realpath(__file__), '..'),'..')),'{:02d}'.format(datetime.date.today().month))
 	# file_name = '{}/logs/lastmetroreminder_{}.txt'.format(os.path.dirname(sys.argv[0]),'{:02d}'.format(datetime.date.today().month))
@@ -31,48 +47,41 @@ def log_file(message):
 		f.write(message)
 
 def get_ip():
+	'''Send message after checking, if user is in office'''
 	r = requests.get(url)
 	response = r.json()
 	current_ip = response['ip']
-	if current_ip in office_ips:
-		date_today = datetime.date.today()
-		current_time = datetime.datetime.now()
-		current_time_str = str('{:%I:%M %p}'.format(current_time.time()))
+	return current_ip
 
-		log_file("{} : Its {} and you are in office with ip address: {}\n".format(date_today, current_time_str, current_ip))
-		last_train_in = datetime.datetime.combine(date_today, last_train_time) - datetime.datetime.combine(datetime.date.today(), current_time.time())
 
-		add_minutes = walk_office_to_metro + metro_wait_average + metro_ride_1 + metro_wait_average + metro_ride_2 + walk_metro_to_home
-		estimated_arrival = current_time + timedelta(minutes=add_minutes)
+def alert_user(current_ip):
+	''' gather relavent information, and alert user '''
+	date_today = datetime.date.today()
+	current_time = datetime.datetime.now()
+	current_time_str = str('{:%I:%M %p}'.format(current_time.time()))
 
-		days	= divmod(last_train_in.seconds, 86400)		# Get days
-		hours 	= divmod(days[1], 3600)						# Use Reminder of days to calc hours
-		minutes	= divmod(hours[1], 60)						# Use Reminder of hours to calc minutes
+	log_status("Working in office with ip address: {}\n".format(current_ip), 'lastmetro')
+	last_train_in = datetime.datetime.combine(date_today, last_train_time) - datetime.datetime.combine(datetime.date.today(), current_time.time())
 
-		time_remaining = "{} hours {} mins".format(hours[0], minutes[0])
-		if hours[0] == 0 and minutes[0] < 61:
-			webbrowser.open(warning_video)
-			notify("Leave now to reach home by {}".format('{:%I:%M %p}'.format(estimated_arrival)), "Last train leaves in {}".format(time_remaining), "ALERT | Last Metro Reminder", 'Hero')
-		else:	
-			notify("Leave now to reach home by {}".format('{:%I:%M %p}'.format(estimated_arrival)), "Last train leaves in {}".format(time_remaining), "Last Metro Reminder", 'Hero')
-	else:
-		pass
+	add_minutes = walk_office_to_metro + metro_wait_average + metro_ride_1 + metro_wait_average + metro_ride_2 + walk_metro_to_home
+	estimated_arrival = current_time + timedelta(minutes=add_minutes)
 
+	days	= divmod(last_train_in.seconds, 86400)		# Get days
+	hours 	= divmod(days[1], 3600)						# Use Reminder of days to calc hours
+	minutes	= divmod(hours[1], 60)						# Use Reminder of hours to calc minutes
+
+	time_remaining = "{} hours {} mins".format(hours[0], minutes[0])
+	if hours[0] == 0 and minutes[0] < 61:
+		webbrowser.open(warning_video)
+		notify("Leave now to reach home by {}".format('{:%I:%M %p}'.format(estimated_arrival)), "Last train leaves in {}".format(time_remaining), "ALERT | Last Metro Reminder", 'Hero')
+		log_status("Code working fine", 'lastmetro')
+	else:	
+		notify("Leave now to reach home by {}".format('{:%I:%M %p}'.format(estimated_arrival)), "Last train leaves in {}".format(time_remaining), "Last Metro Reminder", 'Hero')
+		log_status("Code working fine", 'lastmetro')
+	
 def notify(title, text, subtitle, Audio):
 	send_message(title, text, subtitle)
 	os.system("""osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'""".format(title, subtitle, text, Audio))
 
-
-def send_message(title, text, subtitle):
-	''' Send message to on telegram '''
-	text_message = '''
-		*{}*
-		{}
-		_{}_
-	'''.format(subtitle, text, title)
-	url  = 'https://api.telegram.org/bot{}/sendMessage'.format(TELEGRAM_TOKEN_METROREMINDER)
-	payload = {'text': text_message, 'chat_id':PERSONAL_ID_TELEGRAM, 'parse_mode':'Markdown'}
-	r = requests.post(url, data=payload)
-
 if __name__ == '__main__':
-	get_ip()
+	main()
