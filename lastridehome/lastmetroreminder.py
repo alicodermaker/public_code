@@ -6,6 +6,7 @@ from datetime import timedelta
 import time
 
 from credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
+# from public_code.send_telegram_notification import send_message as s_m
 
 office_ips = [
 	'223.230.66.40',

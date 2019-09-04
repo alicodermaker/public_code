@@ -7,11 +7,14 @@ __pycache__/
 *.so
 
 # Custom files
-*credentials.py
+!*credentials.py
+credentials.py
 
 lastridehome/credentials.py
-lastridehome/lastmetroreminder_*
+
 logs/*
+
+
 
 # Distribution / packaging
 .Python

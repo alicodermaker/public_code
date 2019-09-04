@@ -19,12 +19,19 @@ def send_message(title, text, subtitle):
 	url  = 'https://api.telegram.org/bot{}/sendMessage'.format(TELEGRAM_TOKEN_METROREMINDER)
 	payload = {'text': text_message, 'chat_id':PERSONAL_ID_TELEGRAM, 'parse_mode':'Markdown'}
 	r = requests.post(url, data=payload)
+	
+	print(r.status_code)
+	if r.status_code == 200:
+		print("Message sent!")
+	else:
+		print("some error!")
+	# print(r.text)
 
 if __name__ == '__main__':
 	message_body = """
-
-		* * *
-		This bot can be used by any script... check [Github](https://github.com/alicodermaker/public_code/blob/master/send_telegram_notification.py)
+		we are working on some testing. please be patient..
+		
+		This bot can be used by any script... check [Github page for code](https://github.com/alicodermaker/public_code/blob/master/send_telegram_notification.py)
 	"""
 
-	send_message("by ali khundmiri's bot...", message_body, "Ali's Telegram Bot")
+	send_message("Black is better than yellow...", message_body, "Ali's Telegram Bot")
