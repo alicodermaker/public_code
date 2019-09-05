@@ -19,14 +19,14 @@ def send_message(title, text, subtitle):
 	url  = 'https://api.telegram.org/bot{}/sendMessage'.format(TELEGRAM_TOKEN_METROREMINDER)
 	payload = {'text': text_message, 'chat_id':PERSONAL_ID_TELEGRAM, 'parse_mode':'Markdown'}
 	r = requests.post(url, data=payload)
-	
+	'''
 	print(r.status_code)
 	if r.status_code == 200:
 		print("Message sent!")
 	else:
 		print("some error!")
-	# print(r.text)
-
+	print(r.text)
+	'''
 if __name__ == '__main__':
 	message_body = """
 		we are working on some testing. please be patient..

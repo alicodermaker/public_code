@@ -3,7 +3,7 @@ import sys
 import datetime
 
 def log_file(log_message, project_name, file_type):
-	print(project_name)
+	# print(project_name)
 	if project_name==None:
 		project_name = "general"
 	else:
