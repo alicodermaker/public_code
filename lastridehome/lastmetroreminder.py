@@ -8,13 +8,13 @@ import time
 '''
 adding the parent directory to PYTHONPATH
 '''
-sys.path.insert(0,'..')
+# sys.path.insert(0,'..')
+sys.path.append(os.path.abspath(os.path.join(os.path.join(os.path.join(os.path.realpath(__file__), '..'), '..'),'..')))
 
+# print(sys.path)
 from public_code.credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
 from public_code.send_telegram_notification import send_message
 from public_code.create_log import log_error, log_status
-
-
 
 office_ips = [
 	'223.230.66.40',
