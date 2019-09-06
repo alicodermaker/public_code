@@ -35,7 +35,6 @@ def itunes(platform,subfolder):
 	rows = zip(app_rank, app_title, app_genre, app_url)
 	write_file(rows, create_file(platform,subfolder))
 
-
 def write_file(data, file_name):
 	print("writing file... {}".format(file_name))
 	with open(file_name, 'w+') as f:
@@ -45,7 +44,7 @@ def write_file(data, file_name):
 		
 def create_file(platform, file_name):
 	today_datetime = datetime.datetime.now()
-	folder = "top_apps/{}_{}/{}/".format(today_datetime.year, today_datetime.isocalendar()[1], platform)
+	folder = "top_apps/{}/{}_{}/".format(platform, today_datetime.year, today_datetime.isocalendar()[1])
 	if not os.path.exists(folder):
 		os.mkdir(folder)
 	name = folder + file_name + ".csv"
