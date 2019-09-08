@@ -69,6 +69,9 @@ def write_file(data, file_name):
 		for line in data:
 			writer.writerow(line)
 
+def testing(message):
+	print(message)
+
 if __name__ == '__main__':
 	itunes("free-apps")
 	itunes("paid-apps")

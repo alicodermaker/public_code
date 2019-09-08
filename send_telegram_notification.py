@@ -5,8 +5,19 @@ import webbrowser
 from datetime import timedelta
 import time
 
-from credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
+sys.path.insert(0,'..')
 
+from public_code.credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
+
+def send_custom_message(message_body, from_):
+	''' Send message to on telegram '''
+	text_message = '''
+		{}
+		_message from {}_
+	'''.format(message_body, from_)
+	url  = 'https://api.telegram.org/bot{}/sendMessage'.format(TELEGRAM_TOKEN_METROREMINDER)
+	payload = {'text': text_message, 'chat_id':PERSONAL_ID_TELEGRAM, 'parse_mode':'Markdown'}
+	r = requests.post(url, data=payload)
 
 
 def send_message(title, text, subtitle):
