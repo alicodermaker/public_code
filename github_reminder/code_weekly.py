@@ -1,13 +1,13 @@
 import os, sys
 from github import Github, GithubException
-from credentials import user, password, access_token
+from credentials import user, password, access_token, apex_telegram_bot
 import datetime 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.join(os.path.join(os.path.realpath(__file__), '..'), '..'),'..')))
 
 # print(sys.path)
 from public_code.credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
-from public_code.send_telegram_notification import send_message
+from public_code.send_telegram_notification import send_message, custom_bot_admin
 from public_code.create_log import log_error, log_status
 
 
@@ -16,12 +16,11 @@ def main():
 	# First create a Github instance using an access token
 	g = Github(access_token)
 	user = g.get_user()
-	print(user.login)
+	# print(user.login)
 
 	# Then play with your Github objects:
 	last_update_repo = []
 	date_today = datetime.datetime.now()
-	print("Scanning your repos... Please wait")
 
 
 	for repo in g.get_user().get_repos():
@@ -49,4 +48,13 @@ def notify(title, text, subtitle, Audio):
 
 
 if __name__ == '__main__':
-	main()
+	try:
+		print("attempting to send telegram bot to Apex")
+		custom_bot_admin('Mike Testing', 'GitHub Reminder', apex_telegram_bot)
+	except Exception as e:
+		print("failed")
+		print(e)
+	
+	
+
+	# main()
