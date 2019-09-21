@@ -2,7 +2,7 @@ import os
 import sys
 import datetime
 
-def log_file(log_message, project_name, file_type):
+def log_file(log_message, project_name, new_line, file_type):
 	# print(project_name)
 	if project_name==None:
 		project_name = "general"
@@ -22,13 +22,16 @@ def log_file(log_message, project_name, file_type):
 	with open(file_name,"a+") as f:
 		# message = str(today_datetime) + "  " + log_message + "\n"
 		message = '{} | {} - {}\n'.format(str(today_datetime), current_time_str, log_message)
+
+		if new_line:
+			message = "\n===============================================\n" + message
 		f.write(message)
 
-def log_error(log_message, project_name=None):
-	log_file(log_message, project_name, "error")
+def log_error(log_message, project_name=None, new_line=False):
+	log_file(log_message, project_name, new_line, "error")
 
-def log_status(log_message, project_name=None):
-	log_file(log_message, project_name, "logs")
+def log_status(log_message, project_name=None, new_line=False):
+	log_file(log_message, project_name, new_line, "logs")
 
 if __name__ == '__main__':
 	log_error("logging the first error", 'testing')

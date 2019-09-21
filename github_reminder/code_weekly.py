@@ -12,7 +12,6 @@ from public_code.create_log import log_error, log_status
 
 
 def main():
-	
 	# First create a Github instance using an access token
 	g = Github(access_token)
 	user = g.get_user()
@@ -22,7 +21,10 @@ def main():
 	last_update_repo = []
 	date_today = datetime.datetime.now()
 
-
+	log_message = "Scanning {} repo from account '@{}'".format((g.get_user().get_repos().totalCount), user.login)
+	print(log_message)
+	log_status(log_message, 'code_weekly', new_line=True)
+	
 	for repo in g.get_user().get_repos():
 		try:
 			commit = repo.get_commit(sha='master')
@@ -34,27 +36,40 @@ def main():
 		except GithubException as e:
 			# print(e)
 			pass
+	
+	log_message = "Scan Complete!"
+	print(log_message)
+	log_status(log_message, 'code_weekly')
 
 	last_update = min(last_update_repo)
-	print(last_update)
+	
+	log_message = "Last commit, {} days ago.".format(last_update)
+	print(log_message)
+	log_status(log_message, 'code_weekly')
+	
+	if last_update < 3:
+		log_message = "Notifying Admin."
+		print(log_message)
+		log_status(log_message, 'code_weekly')
 
-	if last_update > 3:
-		print("More than 3 days since your commit. Notifying Admin.")
-		notify("You havent written commits in {} days".format(last_update), "How are you lived past {} days?".format(last_update), "Long Time No Commit", 'Hero')
+		notify("You haven't push code in {} days".format(last_update), "How are you alive without coding?".format(last_update), "Long Time No Commit", 'Hero')
 
 def notify(title, text, subtitle, Audio):
-	send_message(title, text, subtitle)
-	os.system("""osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"'""".format(title, subtitle, text, Audio))
-
-
-if __name__ == '__main__':
+	message = '''
+	*{}*
+	{}
+	_{}_
+	'''.format(subtitle, text, title)
 	try:
-		print("attempting to send telegram bot to Apex")
-		custom_bot_admin('Mike Testing', 'GitHub Reminder', apex_telegram_bot)
+		custom_bot_admin(message, 'GitHub Reminder | Code Weekly', apex_telegram_bot)
 	except Exception as e:
+		log_error("Failed to send telegram message", 'code_weekly', new_line=True)
 		print("failed")
+		log_error(e, 'code_weekly', new_line=True)
 		print(e)
-	
-	
 
-	# main()
+	os.system("""osascript -e 'display notification "{}" with title "{}" subtitle "{}" sound name "{}"' """.format(title, subtitle, text, Audio))
+
+
+if __name__ == '__main__':	
+	main()
