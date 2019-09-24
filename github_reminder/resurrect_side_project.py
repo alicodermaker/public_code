@@ -10,80 +10,18 @@ from public_code.credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TE
 from public_code.send_telegram_notification import send_message, custom_bot_admin
 from public_code.create_log import log_error, log_status
 
-commit_data = [
-('public_code', 0),
-('ACM_challenge_1', 217),
-('afiio', 457),
-('alireviewstuff', 356),
-('automated_emailer', 831),
-('BasicallyTwins', 547),
-('bitcoin_on_amazon', 638),
-('chat-Remainder', 825),
-('Cur-Den', 1046),
-('dailylauncher', 623),
-('edu-tour', 1078),
-('everything', 19),
-('gitignore', 237),
-('gravity_falls', 772),
-('hacker-scripts', 865),
-('housekeeping', 233),
-('idea_cm', 671),
-('image_manuplation', 131),
-('iniglobal', 997),
-('ini_alpha', 894),
-('inpsyght', 362),
-('insta2blog', 234),
-('instabot.py', 745),
-('mera_personal', 25),
-('mindhacking', 779),
-('my-work-list', 463),
-('nasa_quote_website', 92),
-('Paytm_Web_Sample_Kit_Python', 851),
-('personal-goals', 465),
-('poetist', 763),
-('Popular-Movies-1', 999),
-('Portfolio', 1125),
-('private_code', 7),
-('professional', 1032),
-('PyCyanide', 1955),
-('python-aws-s3', 719),
-('PyWhatsapp', 1166),
-('qnapps', 471),
-('quora_chores', 831),
-('Rename-Files', 961),
-('Resume-Forwarder', 1011),
-('revenue_source_directory', 362),
-('ritrew', 642),
-('save_PIL_to_S3', 524),
-('sententia', 919),
-('simple_site', 542),
-('smm', 339),
-('starplayschool', 545),
-('stock_market', 50),
-('subtitle-downloader', 1083),
-('Sunshine', 1072),
-('testing_222', 205),
-('Tutorials', 1300),
-('twitter_user_engagement', 467),
-('vrajrv', 204),
-('woodwatchtime', 911),
-('ytpomodoro', 98),
-('ardizen_website_2019', 155),
-('Workplace', 16),
-
-]
 
 def main():
 	# First create a Github instance using an access token
+	date_today = datetime.datetime.now()
 	g = Github(access_token)
 	user = g.get_user()
-	# print(user.login)
+	joined_since = round((date_today - user.created_at).days / 365.25)
 
 	# Then play with your Github objects:
 	last_update_repo = []
-	date_today = datetime.datetime.now()
-
-	log_message = "Scanning {} repo from account '@{}'".format((g.get_user().get_repos().totalCount), user.login)
+	total_project = g.get_user().get_repos().totalCount
+	log_message = "Scanning {} repo from account '@{}'".format(total_project, user.login)
 	print(log_message)
 	# log_status(log_message, 'resurrect_side_project', new_line=True)
 	
@@ -91,24 +29,50 @@ def main():
 		try:
 			commit = repo.get_commit(sha='master')
 			last_commit = commit.commit.committer.date
-			# print("{}".format((last_commit)))
 
 			delta = date_today - last_commit
-			commit_data = repo.name,delta.days
-			last_update_repo.append(commit_data)
-			# print("{} -- Last commit: {} days ago".format(repo.name,delta))
+			# sort out project older than 120 days, and less than 30 days
+			if 30 < delta.days < 120:
+				commit_data = repo.name,repo.description,delta.days,
+				last_update_repo.append(commit_data)
 		except GithubException as e:
 			# print(e)
 			pass
 
-	for repo in last_update_repo:
-		print(repo)
+	generate_message(last_update_repo, total_project, joined_since)
 
-def sort_data(commit_data):
-	sorted_list = sorted(commit_data,reverse = True , key = lambda x: x[1])
-	for item in sorted_list:
-		print(item)
 
+def generate_message(last_update_repo, total_project, joined_since):
+
+	details = '''
+	'''
+	for project in last_update_repo:
+		detail = '''
+*{}*
+_last commit {} days ago..._
+Description: {}
+		'''.format(project[0], project[2], project[1])
+		details = detail + details
+
+	message = '''
+Hi, how are you?
+
+I know this is awkard, but your exs reached out to me.
+Listen, Im not going to force you to be with someone, I know it's your choice to _work it out_ or _leave it all_, but think about it man, every *side project* deserve better.
+
+I understand, in the past *{} years*, you have been with *{} projects*. It's just who you are. I get it.
+But you can move on like this!!!! 
+
+If these are good projects, then I know for certain these {} deserve a second chance.
+
+In case you forgot, this is what you thought of them when you first met them
+{}
+
+Sometimes all you need is break. I think you've had your break, long enough.
+	'''.format(joined_since, total_project, len(last_update_repo), details)
+
+	# print(message)
+	custom_bot_admin(message, "crazy ex projects", apex_telegram_bot)
 def notify(title, text, subtitle, Audio):
 	message = '''
 	*{}*
@@ -126,5 +90,5 @@ def notify(title, text, subtitle, Audio):
 
 
 if __name__ == '__main__':
-	sort_data(commit_data)
-	# main()
+	# sort_data(commit_data)
+	main()
