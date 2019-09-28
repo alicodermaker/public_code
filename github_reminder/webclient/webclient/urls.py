@@ -17,11 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 # from django.contrib.auth import views as auth_views
 
-from main.views import login, home, send_message
+from main.views import login, home, send_message, desktop
+
+from telegrambot.views import message_reciever
+
 urlpatterns = [
+    path('', desktop),
     path('login/', login, name='login'),
     path('send_message/', send_message, name='send_message'),
     path('accounts/profile/', home),
+    path('hook/', message_reciever),
+
     # path('logout/', auth_views.logout, name='logout'),
     path('oauth/', include('social_django.urls', namespace='social')),
     path('admin/', admin.site.urls),

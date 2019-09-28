@@ -26,10 +26,17 @@ SECRET_KEY = '%v7-u0y$6!in7ybq=a0y+&%p2bt($gu)v62)af!@9tizdqs3(t'
 SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
 
+
+TELEGRAM_TOKEN_SEPTEMBER = os.environ.get('TELEGRAM_TOKEN_SEPTEMBER')
+PERSONAL_ID_TELEGRAM = os.environ.get('PERSONAL_ID_TELEGRAM')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+'https://septemberthebot.herokuapp.com',
+'http://septemberthebot.herokuapp.com',
+'septemberthebot.herokuapp.com',
+'127.0.0.1',]
 
 
 # Application definition
@@ -37,6 +44,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Created app
     'main', 
+    'telegrambot',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'social_django',  # <-- installed app
 ]
 
@@ -143,4 +152,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# Local files
 STATIC_URL = '/static/'
+
+# # Copy data from here to server
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    #'/var/www/static/',
+]
+# Server emmumator. One up DIR
+STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn")
+
+MEDIA_URL = "/media_cdn/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media_cdn")

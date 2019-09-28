@@ -4,6 +4,9 @@ from social_django.models import UserSocialAuth
 from github import Github, GithubException
 import datetime 
 
+
+def desktop(request):
+	return render(request, 'main/desktop.html')
 @login_required
 def home(request):
 	user = request.user
