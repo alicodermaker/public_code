@@ -6,7 +6,10 @@ import datetime
 
 
 def desktop(request):
+	print("visitor recieved. and trafered to some other place")
 	return render(request, 'main/desktop.html')
+
+
 @login_required
 def home(request):
 	user = request.user
