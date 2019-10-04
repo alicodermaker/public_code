@@ -25,7 +25,7 @@ urlpatterns = [
     path('', desktop),
     path('login/', login, name='login'),
     path('send_message/', send_message, name='send_message'),
-    path('accounts/profile/', home),
+    path('accounts/profile/', home, name='home'),
     path('hook/', message_reciever),
 
     # path('logout/', auth_views.logout, name='logout'),

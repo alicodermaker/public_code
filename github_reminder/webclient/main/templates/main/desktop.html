@@ -1,11 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Hello! Please open through telegram chat</title>
-</head>
-<body>
-	<p>Hey, Looks like you are interested in September</p>
-	<p>Please open telegram to login and signup</p>
-	<p><a href="https://t.me/SeptembBot">Crazy Ex Project</a> (https://t.me/SeptembBot)</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Welcome | {{ block.super }}
+{% endblock %}
+
+<!-- Page Content -->
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<h1 class="mt-5" style="color: #7E7F68">Crazy Ex Projects</h1>
+			<p class="lead"> 
+				Are you a programmer who starts multiple projects but never finishes them?<br>
+				Do you feel like the ideas you had are worth it, and might need a second change?<br>
+				If you answer yes to these questions, then this is for you.
+				<br>
+				<br>
+				Presenting CEP, it is a bot on telegram, which has only one job. To remind you of all the projects you have started, but have abandoned them ever since. In the Alpha stage, all CEP does is look for projects with last commit between 3-9 months ago, and messages you with Project name, description and link.
+			</p>
+		</div>
+		<div class="col-lg-12">
+			<h3>Let's Get Started</h3>
+			<ol class="">
+				<li>
+					Login with Github
+				</li>
+				<li>
+					Connect Telegram
+				</li>
+				<li>
+					click on start
+				</li>
+				<li>
+					Get message from us, every <b>Friday</b>.
+				</li>
+			</ol>
+		</div>
+		<div class="col-lg-12">
+
+			<a href="{% url 'social:begin' 'github' %}" class="btn btn-primary btn-lg">Login with Github</a>
+			<br><br>
+		</div>
+
+		<div class="col-lg-12">
+			<h3>Under Development</h3>
+			<p>CEP is currently in development phase, and a very limited number of people has access to it.<br> If you are interested in testing <span style="color: #7E7F68" >Crazy Ex Projects</span> please reach me through either 
+				<a href="https://www.twitter.com/alicodermaker" target="_blank">Twitter</a>, <a href="https://www.instagram.com/alicodermaker" target="_blank">Instagram</a> or write me an <a href="mailto:alikhundmiri.developer@gmail.com">email</a>
+			</p>
+			<p><blockquote>Cheers, Happy coding<cite><br>Ali Khundmiri</cite></blockquote></p>
+		</div>
+	</div>
+</div>
+{% endblock %}

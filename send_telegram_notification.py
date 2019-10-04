@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, json
 import requests
 import datetime
 import webbrowser
@@ -7,7 +7,7 @@ import time
 
 sys.path.insert(0,'..')
 
-from public_code.credentials import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
+from public_code.credentials import TELEGRAM_TOKEN_METROREMINDER, TELEGRAM_TOKEN_SEPTEMBER, PERSONAL_ID_TELEGRAM
 
 def custom_bot_admin(message_body, from_, to_):
 	''' Send message to on telegram '''
@@ -48,11 +48,50 @@ def send_message(title, text, subtitle):
 		print("some error!")
 	print(r.text)
 	'''
+
+def send_message_simple(title, text):
+	''' Send message to on telegram '''
+	text_message = '''
+		*{}*
+		{}
+	'''.format(title, text)
+	url  = 'https://api.telegram.org/bot{}/sendMessage'.format(TELEGRAM_TOKEN_METROREMINDER)
+	# payload = {'text': text_message, 'chat_id':PERSONAL_ID_TELEGRAM, 'parse_mode':'Markdown'}
+	reply_markup={
+		"keyboard":
+		[
+			[
+			{"text" : "Login via Github", 'url' : "https://www.instagram.com/alicodermaker"},
+			],
+			[
+			{"text" : "Explain How it works", 'url' : "https://septemberthebot.herokuapp.com"},
+			]
+		],
+		"one_time_keyboard" : True
+	}
+
+	payload = {
+		'text': text_message,
+		'chat_id':PERSONAL_ID_TELEGRAM,
+		'parse_mode':'Markdown',
+		'reply_markup' : json.dumps(reply_markup)
+	}
+	r = requests.post(url, data=payload)
+	print(r.text)
+
 if __name__ == '__main__':
 	message_body = """
-		we are working on some testing. please be patient..
+		Welcome user,
 		
-		This bot can be used by any script... check [Github page for code](https://github.com/alicodermaker/public_code/blob/master/send_telegram_notification.py)
+
+		To proceed with the app, 
+		select "Login in with Github"
+
+
+		To learn how it works, 
+		select "Explain How it works"
+	
+	Please Choose an option to continue...
 	"""
 
-	send_message("Black is better than yellow...", message_body, "Ali's Telegram Bot")
+	send_message_simple("Crazy Ex Projects", message_body)

@@ -1,18 +1,43 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from social_django.models import UserSocialAuth
+from django.urls import reverse
+
 from github import Github, GithubException
 import datetime 
+import uuid 
 
+from .models import accountCode
+from .forms import UserVerifyForm
 
 def desktop(request):
-	print("visitor recieved. and trafered to some other place")
+	print(uuid.uuid4().hex[:10].upper())
+	# print("visitor recieved. and trafered to some other place")
 	return render(request, 'main/desktop.html')
 
 
 @login_required
 def home(request):
 	user = request.user
+
+	try:
+		user_verify = accountCode.objects.get(user=user)
+		
+	except Exception as e:
+		print("user not found, creating form")
+
+		form = UserVerifyForm(request.POST or None)
+	
+		if form.is_valid():
+			print('form is valid')
+		else:
+			print('form is not valid')
+			instance = form.save(commit=False)
+			instance.user = request.user
+			instance.save()
+			return HttpResponseRedirect(reverse('home'))
+
+
 
 	try:
 		github_login = user.social_auth.get(provider='github')
@@ -28,7 +53,9 @@ def home(request):
 	print(user)
 
 	context = {
-		'github_login' : github_login
+		'github_login' : github_login,
+		'user_connected' : user_verify.user_connected,
+		'verification_code' : user_verify.verify_code,
 	}
 	return render(request,'main/homepage.html', context)
 

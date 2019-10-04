@@ -21,6 +21,7 @@ from public_code.create_log import log_error, log_status
 office_ips = [
 	'223.230.66.40',
 	'183.82.107.34',
+	'183.82.113.245',
 ]
 
 last_train_time = datetime.time(22, 00, 00)
