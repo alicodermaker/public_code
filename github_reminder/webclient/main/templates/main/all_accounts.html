@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+All Accounts | {{ block.super }}
+{% endblock %}
+
+<!-- Page Content -->
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<h2>Accounts Tally</h2>
+			<div class="col-lg-6">
+				<table class="table">
+					<thead>
+						<th>Platform</th>
+						<th>Registered user</th>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">Github Accounts</th>
+							<td>{{github_count}}</td>
+						</tr>
+						<tr>
+							<th scope="row">telegram Accounts</th>
+							<td>{{telegram_count}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- <p>login extra detail {{github_login.extra_data.access_token}}</p> -->
+		</div>
+	</div>
+</div>
+{% endblock %}

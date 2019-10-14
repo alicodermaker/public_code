@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 # from django.contrib.auth import views as auth_views
 
-from main.views import login, home, send_message, desktop
+from main.views import login, home, send_message, desktop, all_accounts
 
 from telegrambot.views import message_reciever
 
 urlpatterns = [
     path('', desktop),
     path('login/', login, name='login'),
+    path('all_accounts/', all_accounts, name='all_accounts'),
     path('send_message/', send_message, name='send_message'),
     path('accounts/profile/', home, name='home'),
     path('hook/', message_reciever),
