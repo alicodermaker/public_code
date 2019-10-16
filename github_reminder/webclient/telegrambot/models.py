@@ -34,10 +34,11 @@ class telegramAccount(models.Model):
         ordering = ["-timestamp", "-updated"]
 
 
-class messageLogs(models.Model): 
-    id_user     = models.IntegerField(unique=True, primary_key=True)
-    first_name  = models.CharField(max_length=64)
-    last_name   = models.CharField(max_length=64)
+class messageLogs(models.Model):
+    id_user         = models.IntegerField()
+    message         = models.TextField(max_length=4096)
+    first_name      = models.CharField(max_length=64)
+    last_name       = models.CharField(max_length=64)
 
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -48,11 +49,26 @@ class messageLogs(models.Model):
     class Meta:
         ordering = ["-timestamp", "-updated"]
 
-class Message(models.Model):
-    update_id       = models.IntegerField(unique=True)
-    text            = models.TextField(max_length=4096)
-    date            = models.DateTimeField(default=timezone.now)
-    sender          = models.ForeignKey(messageLogs, on_delete=models.CASCADE)
- 
+class messageBuffer(models.Model):
+    id_user         = models.IntegerField()
+    message         = models.TextField(max_length=4096)
+    first_name      = models.CharField(max_length=64)
+    last_name       = models.CharField(max_length=64)
+
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+
     def __str__(self):
-        return f'{self.text}'
+        return f'{self.first_name} {self.last_name}'
+
+    class Meta:
+        ordering = ["-timestamp", "-updated"]
+
+# class Message(models.Model):
+#     update_id       = models.IntegerField(unique=True)
+#     text            = models.TextField(max_length=4096)
+#     date            = models.DateTimeField(default=timezone.now)
+#     sender          = models.ForeignKey(messageLogs, on_delete=models.CASCADE)
+ 
+#     def __str__(self):
+#         return f'{self.text}'

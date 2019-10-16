@@ -10,6 +10,7 @@ from social_django.models import UserSocialAuth
 from telegrambot.models import telegramAccount
 from .models import accountCode
 from .forms import UserVerifyForm
+from .weekly_reminder import gather_github_data
 
 def desktop(request):
 	'''Opens the simple landing page'''
@@ -103,6 +104,21 @@ def login(request):
 @user_passes_test(lambda u: u.is_superuser)
 def all_accounts(request):
 	''' Simple over view of all the accounts '''
+	telegram_count = telegramAccount.objects.all().count()
+	github_count = UserSocialAuth.objects.filter(provider='github').count()
+
+	context = {
+		'telegram_count' : telegram_count,
+		'github_count' : github_count,
+	}
+	return render(request, 'main/all_accounts.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def friday_protocol(request):
+	''' friday_protocol : gather information '''
+	gather_github_data()
+
+	# after this is done, load the data from models where all instances are saved.
 	telegram_count = telegramAccount.objects.all().count()
 	github_count = UserSocialAuth.objects.filter(provider='github').count()
 
