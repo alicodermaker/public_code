@@ -10,7 +10,7 @@ from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, Ht
 from django.views.decorators.csrf import csrf_exempt
 
 from main.models import accountCode
-from .models import messageLogs
+# from .models import messageLogs
 from .forms import ConnectTelegramForm
 # from settings import TELEGRAM_TOKEN_METROREMINDER, PERSONAL_ID_TELEGRAM
 

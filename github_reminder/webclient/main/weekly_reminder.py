@@ -2,7 +2,7 @@
 from social_django.models import UserSocialAuth
 from github import Github, GithubException
 
-from telegrambot.models import telegramAccount, messageLogs, messageBuffer
+from telegrambot.models import telegramAccount#, messageLogs, messageBuffer
 import datetime 
 
 ''' This file contains code to send weekly messages'''
@@ -54,7 +54,7 @@ def get_users():
 
 		message = github_data(github_login)
 		print("\tOK\t\tmessage generated")
-		save_data(message, user)
+		# save_data(message, user)
 		i += 1
 
 def github_data(github_login):
@@ -73,13 +73,9 @@ def github_data(github_login):
 	last_update_repo = []
 	print("\tOK\t\tPlease wait... looking for Abandoned projects. might take a while...")
 	for repo in all_projects:
-		print('\tOK\t\t -- in repo')
 		try:
-			print('\tOK\t\t -- apply commit')
 			commit = repo.get_commit(sha='master')
-			print('\tOK\t\t -- got commit')
 			last_commit = commit.commit.committer.date
-
 			delta = date_today - last_commit
 			# sort out project older than 120 days, and less than 30 days
 			if 30 < delta.days < 120:
@@ -118,7 +114,7 @@ _Sometimes all you need is Break and Distance to understand the meaning._
 	'''.format(total_project, len(last_update_repo), details)
 	return message
 	
-
+'''
 def save_data(message, user):
 	print("\tOK\t\tsaving message and user into to database")
 	entry = messageBuffer.objects.create(
@@ -128,7 +124,7 @@ def save_data(message, user):
 		last_name = user.last_name)
 	entry.save()
 	print("\tCOMPLETE\t\tMessage Generated and Saved")
-
+'''
 	
 
 def send_message(github_login):

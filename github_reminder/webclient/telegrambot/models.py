@@ -33,9 +33,8 @@ class telegramAccount(models.Model):
     class Meta:
         ordering = ["-timestamp", "-updated"]
 
-
+'''
 class messageLogs(models.Model):
-    id              = models.BigIntegerField(primary_key = True)
     id_user         = models.IntegerField()
     message         = models.TextField(max_length=4096)
     first_name      = models.CharField(max_length=64)
@@ -49,10 +48,11 @@ class messageLogs(models.Model):
 
     class Meta:
         ordering = ["-timestamp", "-updated"]
+'''
 
 class messageBuffer(models.Model):
-    id              = models.BigIntegerField(primary_key = True)
-    id_user         = models.IntegerField()
+    # changed from id_user to user_id. 
+    user_id         = models.IntegerField()
     message         = models.TextField(max_length=4096)
     first_name      = models.CharField(max_length=64)
     last_name       = models.CharField(max_length=64)
