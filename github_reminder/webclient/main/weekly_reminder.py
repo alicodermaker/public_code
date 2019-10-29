@@ -162,3 +162,20 @@ def send_message(github_login):
 # gather_github_data()
 # if __name__ == '__main__':
 # 	gather_github_data()
+
+
+def get_user_post(self):
+	''' Enter the post you want to submit to reddit '''
+	pass
+
+def get_post_time(self):
+	''' Enter the timezone. Depending on which subreddit you want to post, this will change based on the time at which subreddit has most active users'''
+	pass
+
+def get_user_credential(self):
+	''' Reddit require accesstoken, which expires every 120 '''
+	pass
+
+def post_on_reddit(self):
+	''' Post on reddit, with user's credentials '''
+	pass

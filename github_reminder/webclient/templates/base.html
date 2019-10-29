@@ -4,59 +4,54 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Start working on your abandoned and older projects with the help of Crazy Ex Projects. Because Ideas need Time and Perspective">
-  <meta name="author" content="Ali Khundmiri">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Start working on your abandoned and older projects with the help of Crazy Ex Projects. Because Ideas need Time and Perspective">
+	<meta name="author" content="Ali Khundmiri">
 
-  <title>Crazy Ex Projects | Going back to Old Projects</title>
+	<title>Crazy Ex Projects | Going back to Old Projects</title>
 
-  <!-- Bootstrap core CSS -->
-  <!-- <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- Bootstrap core CSS -->
+	<!-- <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-      <a class="navbar-brand" href="#"><span style="color: #EFF1C5">Crazy Ex Projects</span> <sup style="color:red">Alpha</sup></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <!-- <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li> -->
-          {% if request.user.is_superuser %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'friday_protocol' %}">Friday Protocol</a>
-          </li> 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'all_accounts' %}">All Accounts</a>
-          </li>
-          {% endif %}
-          <li class="nav-item active">
-            <a class="nav-link btn btn-primary" href="{% url 'social:begin' 'github' %}">Begin</a>
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+		<div class="container">
+			<a class="navbar-brand" href="#"><span style="color: #EFF1C5">Crazy Ex Projects</span> <sup style="color:red">Alpha</sup></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					{% if request.user.is_superuser %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'friday_protocol' %}">Friday Protocol</a>
+					</li> 
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'all_accounts' %}">All Accounts</a>
+					</li>
+					{% endif %}
+					<li class="nav-item active">
+						<a class="nav-link btn btn-primary" href="{% url 'social:begin' 'github' %}">Begin</a>
 
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 
-  <!-- Page Content -->
-  {% block content %}
-  {% endblock %}
+	<!-- Page Content -->
+	{% block content %}
+	{% endblock %}
 
-  <!-- Bootstrap core JavaScript -->
-  <!-- <script src="vendor/jquery/jquery.slim.min.js"></script> -->
-  <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+	<!-- Bootstrap core JavaScript -->
+	<!-- <script src="vendor/jquery/jquery.slim.min.js"></script> -->
+	<!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
 </body>
 

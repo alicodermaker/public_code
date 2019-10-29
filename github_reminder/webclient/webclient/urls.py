@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+
 # from django.contrib.auth import views as auth_views
 
 from main.views import login, home, send_message, desktop, all_accounts, friday_protocol
