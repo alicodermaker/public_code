@@ -36,7 +36,7 @@ Welcome | {{ block.super }}
 		<div class="features-extended-inner section-inner">
 			<div class="features-extended-wrap">
 				<div class="container">
-					<div class="feature-extended">
+					<!-- <div class="feature-extended">
 						<div class="feature-extended-image">
 							<div class="mockup-bg">
 								<img src="{% static 'base/dist/images/iphone-feature-bg-01.svg' %}" alt="iPhone Feature 01 illustration">
@@ -47,7 +47,7 @@ Welcome | {{ block.super }}
 							<h3 class="mt-0 mb-16">Work on Side projects, Every weekend</h3>
 							<p class="m-0">Get telegram messages every friday, remind you of all the side projects you can work on.</p>
 						</div>
-					</div>
+					</div> -->
 					<!-- <div class="feature-extended">
 						<div class="feature-extended-image">
 							<div class="mockup-bg">
@@ -56,8 +56,23 @@ Welcome | {{ block.super }}
 							<img class="device-mockup is-revealing" src="{% static 'base/dist/images/iphone-feature-02.png' %}" alt="iPhone Feature 02">
 						</div>
 						<div class="feature-extended-body is-revealing">
-							<h3 class="mt-0 mb-16">Amazing features, coming soon.</h3>
-							<p class="m-0">Quam quisque id diam vel quam elementum pulvinar. Ut etiam sit amet nisl purus in mollis nunc. Odio morbi quis commodo odio aenean sed adipiscing diam donec.</p>
+							<h3 class="mt-0 mb-16">Let's Get Started</h3>
+							<p class="m-0">
+								<ol class="">
+									<li>
+										Login with Github, <i>github might send you a verification code to your email address</i>
+									</li>
+									<li>
+										Connect Telegram
+									</li>
+									<li>
+										click on start
+									</li>
+									<li>
+										Get message from us, every <b>Friday</b>.
+									</li>
+								</ol>
+							</p>
 						</div>
 					</div> -->
 					<!-- <div class="feature-extended">
@@ -103,7 +118,7 @@ Welcome | {{ block.super }}
 				Presenting CEP, it is a bot on telegram, which has only one job. To remind you of all the projects you have started, but have abandoned them ever since. In the Alpha stage, all CEP does is look for projects with last commit between 3-9 months ago, and messages you with Project name, description and link.
 			</p>
 		</div> -->
-		<!-- <div class="col-lg-12">
+		<div class="col-lg-12">
 			<h3>Let's Get Started</h3>
 			<ol class="">
 				<li>
@@ -119,7 +134,7 @@ Welcome | {{ block.super }}
 					Get message from us, every <b>Friday</b>.
 				</li>
 			</ol>
-		</div> -->
+		</div>
 		<!-- <div class="col-lg-12">
 
 			<a href="{% url 'social:begin' 'github' %}" class="btn btn-primary btn-lg">Login with Github</a>
