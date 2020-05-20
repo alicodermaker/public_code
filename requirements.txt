@@ -29,7 +29,7 @@ gevent==1.1.2
 google-api-python-client==1.6.2
 greenlet==0.4.10
 html5lib==0.9999999
-httplib2==0.10.3
+httplib2==0.18.0
 idna==2.8
 imgkit==1.0.1
 ipykernel==5.1.2
