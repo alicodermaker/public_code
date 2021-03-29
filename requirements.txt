@@ -65,7 +65,7 @@ pyasn1==0.3.1
 pyasn1-modules==0.0.10
 PyAutoGUI==0.9.36
 pyenchant==1.6.11
-Pygments==2.4.2
+Pygments==2.7.4
 PyMsgBox==1.0.6
 pyobjc==4.1
 pyobjc-core==4.1
