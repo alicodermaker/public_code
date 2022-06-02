@@ -28,7 +28,7 @@ docutils==0.13.1
 gevent==1.1.2
 google-api-python-client==1.6.2
 greenlet==0.4.10
-html5lib==0.9999999
+html5lib==0.99999999
 httplib2==0.10.3
 idna==2.8
 imgkit==1.0.1
